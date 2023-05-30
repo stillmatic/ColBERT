@@ -21,7 +21,8 @@ dependencies = [
     "tqdm",
     "transformers",
     "ujson",
-    "flask",
+    "quart",
+    "quart-schema",
     "python-dotenv",
     "torch",
     "faiss-cpu"
@@ -29,4 +30,5 @@ dependencies = [
 optional-dependencies = { dev = [
     "jupyter",
     "jupyterlab",
+    "pytest-asyncio",
 ]  }
