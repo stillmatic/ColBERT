@@ -2,7 +2,7 @@ import os
 import torch
 
 from tqdm import tqdm
-from typing import Union
+from typing import Optional, Union
 
 from colbert.data import Collection, Queries, Ranking
 
@@ -20,7 +20,10 @@ TextQueries = Union[str, 'list[str]', 'dict[int, str]', Queries]
 
 
 class Searcher:
-    def __init__(self, index, checkpoint=None, collection=None, config=None):
+    checkpoint: Checkpoint
+    collection: Collection
+
+    def __init__(self, index: str, checkpoint: Optional[str]=None, collection=None, config=None):
         print_memory_stats()
 
         initial_config = ColBERTConfig.from_existing(config, Run().config)
@@ -29,14 +32,14 @@ class Searcher:
         self.index = os.path.join(default_index_root, index)
         self.index_config = ColBERTConfig.load_from_index(self.index)
 
-        self.checkpoint = checkpoint or self.index_config.checkpoint
-        self.checkpoint_config = ColBERTConfig.load_from_checkpoint(self.checkpoint)
+        checkpoint_path = checkpoint or self.index_config.checkpoint
+        self.checkpoint_config = ColBERTConfig.load_from_checkpoint(checkpoint_path)
         self.config = ColBERTConfig.from_existing(self.checkpoint_config, self.index_config, initial_config)
 
         self.collection = Collection.cast(collection or self.config.collection)
         self.configure(checkpoint=self.checkpoint, collection=self.collection)
 
-        self.checkpoint = Checkpoint(self.checkpoint, colbert_config=self.config)
+        self.checkpoint = Checkpoint(checkpoint_path, colbert_config=self.config)
         use_gpu = self.config.total_visible_gpus > 0
         if use_gpu:
             self.checkpoint = self.checkpoint.cuda()

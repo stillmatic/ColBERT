@@ -125,17 +125,18 @@ class IndexUpdater:
         )
 
         # Build partitions for each pid and update IndexUpdater's current ivf
-        start = 0
-        for doclen in doclens:
-            end = start + doclen
-            codes = compressed_embs.codes[start:end]
-            partitions, _ = self._build_passage_partitions(codes)
-            self._add_pid_to_ivf(partitions, curr_pid)
+        if doclens:
+            start = 0
+            for doclen in doclens:
+                end = start + doclen
+                codes = compressed_embs.codes[start:end]
+                partitions, _ = self._build_passage_partitions(codes)
+                self._add_pid_to_ivf(partitions, curr_pid)
 
-            start = end
-            curr_pid += 1
+                start = end
+                curr_pid += 1
 
-        assert start == sum(doclens)
+            assert start == sum(doclens)
 
         # Update new ivf in searcher
         new_ivf_tensor = StridedTensor(

@@ -4,6 +4,11 @@ import inspect
 
 
 class Provenance:
+    source: str
+    queries: dict
+    config: dict
+    k: int
+    
     def __init__(self) -> None:
         self.initial_stacktrace = self.stacktrace()
 
