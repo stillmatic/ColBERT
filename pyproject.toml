@@ -11,3 +11,22 @@ authors = [
 ]
 urls = {home = "https://github.com/stanford-futuredata/ColBERT"}
 requires-python = ">=3.6"
+dependencies = [
+    "bitarray",
+    "datasets",
+    "gitpython",
+    "ninja",
+    "scipy",
+    "spacy",
+    "tqdm",
+    "transformers",
+    "ujson",
+    "flask",
+    "python-dotenv",
+    "torch",
+    "faiss-cpu"
+]
+optional-dependencies = { dev = [
+    "jupyter",
+    "jupyterlab",
+]  }
