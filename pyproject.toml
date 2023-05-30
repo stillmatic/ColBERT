@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+
+[project]
+name = "ColBERT"
+version = "0.2.0"
+description = "Efficient and Effective Passage Search via Contextualized Late Interaction over BERT"
+readme = "README.md"
+authors = [
+    {name = "Omar Khattab", email = "okhattab@stanford.edu"},
+]
+urls = {home = "https://github.com/stanford-futuredata/ColBERT"}
+requires-python = ">=3.6"
